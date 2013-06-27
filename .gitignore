@@ -1,4 +1,5 @@
 
-/src/.empty
-/bin
+RPNCalculatorCore/src/.empty
+RPNCalculatorCore/bin
 .DS_Store
+RPNCalculatorCore/bin/*
