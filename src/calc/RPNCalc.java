@@ -1,37 +1,23 @@
 package calc;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class RPNCalc {
 
-    enum Operations {
-        add("+"), 
-        subtract("-"), 
-        multiply("*"), 
-        devide("/");
+	Stack<Number> mStack = new Stack<Number>();
 
-        String alt;
-        Operations(String alt) { this.alt = alt; }
-        public static Operations get(String alt) {
-            for (Operations o : values())
-                if (o.alt == alt) { return o; }
-            return null;
-        }
-    }
+	public void push(Number i) {
+		mStack.push(i);
+	}
 
-    Stack<Number> mStack = new Stack<Number>();
+	public Number operate(Operations i) throws TooFewOperandsException {
+		try {
+			Number result = i.operate(mStack.pop(), mStack.pop());
 
-    public void push(Number i) { mStack.push(i); }
-    public Number operate(Operations i) {
-        Number n1 = mStack.pop();
-        Number n2 = mStack.pop();
-        Number result;
-        
-        if ((n1.doubleValue() == n1.longValue()) && (n2.doubleValue() == n2.longValue())) {
-            result = (n1.longValue() + n2.longValue());
-        } else {
-            result = (n1.doubleValue() + n2.doubleValue());
-        }
-        return mStack.push(result);
-    }
+			return mStack.push(result);
+		} catch (EmptyStackException e) {
+			throw new TooFewOperandsException(e);
+		}
+	}
 }

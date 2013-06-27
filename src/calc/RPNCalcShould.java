@@ -1,35 +1,55 @@
 package calc;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import calc.RPNCalc.Operations;
 
 public class RPNCalcShould {
 
-    @Before
-    public void setUp() {}
+	private RPNCalc rpn;
 
-    @Test
-    public void testAddTwoNumbers() {        
-        RPNCalc rpn = new RPNCalc();
-        rpn.push(2);
-        rpn.push(4);
-        Number top = rpn.operate(Operations.get("+"));
-        assertEquals(6, top.doubleValue(), 0.001);
+	@Before
+	public void setUp() {
+		rpn = new RPNCalc();
+	}
+
+	@Test
+	public void testAddTwoNumbers() {
+		rpn.push(2);
+		rpn.push(4);
+		Number top = rpn.operate(Operations.get("+"));
+		assertEquals(6, top.doubleValue(), 0.001);
+	}
+
+	@Test
+	public void testAddThreeNumbers() {
+		rpn.push(2);
+		rpn.push(4);
+		rpn.push(5);
+		rpn.operate(Operations.add);
+		Number top = rpn.operate(Operations.add);
+		assertEquals(11, top.doubleValue(), 0.001);
+	}
+
+	@Test(expected=TooFewOperandsException.class)
+    public void testAddingTooFewOperands() {
+    	rpn.push(2);
+    	rpn.operate(Operations.add);
     }
-    
-    @Test
-    public void testAddThreeNumbers() {        
-        RPNCalc rpn = new RPNCalc();
-        rpn.push(2);
-        rpn.push(4);
-        rpn.push(5);
-        rpn.operate(Operations.get("+"));
-        Number top = rpn.operate(Operations.get("+"));
-        assertEquals(11, top.doubleValue(), 0.001);
-    }
-    
+	
+	@Test
+	public void testMutiplyingAndAddingOperands() {
+		rpn.push(5);
+		rpn.push(1);
+		rpn.push(2);
+		rpn.operate(Operations.add);
+		rpn.push(4);
+		rpn.operate(Operations.multiply);
+		rpn.operate(Operations.add);
+		rpn.push(3);
+		Number top = rpn.operate(Operations.subtract);
+		assertEquals(14, top.doubleValue(), 0.001);
+	}
 }
