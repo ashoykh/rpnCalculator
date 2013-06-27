@@ -20,4 +20,8 @@ public class RPNCalc {
 			throw new TooFewOperandsException(e);
 		}
 	}
+	
+	public Stack<Number> getRPNStack() {
+		return (Stack<Number>)(mStack.clone());
+	}
 }

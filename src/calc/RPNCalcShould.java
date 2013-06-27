@@ -2,6 +2,8 @@ package calc;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Stack;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,5 +53,19 @@ public class RPNCalcShould {
 		rpn.push(3);
 		Number top = rpn.operate(Operations.subtract);
 		assertEquals(14, top.doubleValue(), 0.001);
+	}
+	
+	@Test
+	public void testRPNStackContainsPushedValuesInCorrectOrder() {
+		Stack<Number> tmp = new Stack<Number>();
+		for (int i = 5 ; i > 0 ; i--) {
+			tmp.push(i);
+			rpn.push(i);
+		}
+
+		Stack<Number> res = rpn.getRPNStack();
+		for (int i = 5 ; i > 0 ; i--) {
+			assertEquals(tmp.pop(), res.pop());
+		}
 	}
 }
