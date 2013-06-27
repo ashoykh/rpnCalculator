@@ -1,2 +1,4 @@
-# Empty 
+
 /src/.empty
+/bin
+.DS_Store
