@@ -33,7 +33,7 @@ enum Operations {
 
 	public static Operations get(String alt) {
 		for (Operations o : values())
-			if (o.alt == alt) {
+			if (o.alt.equals(alt)) {
 				return o;
 			}
 		return null;
